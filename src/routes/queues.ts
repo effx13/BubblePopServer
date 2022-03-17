@@ -16,9 +16,7 @@ router.get('/', (req, res) => {
 
 // Create new Document
 router.post('/', (req, res) => {
-  Queue.create({
-    uuid: req.body.uuid,
-  })
+  Queue.create(req.body)
     .then((queue) => res.send(queue))
     .catch((err) => res.status(500).send(err));
 });
