@@ -14,6 +14,7 @@ const QueueSchema: Schema = new Schema(
   {
     name: {
       type: String,
+      unique: true,
       required: true,
     },
     isPayed: {
@@ -22,8 +23,8 @@ const QueueSchema: Schema = new Schema(
     },
     uuid: {
       type: String,
-      required: true,
       unique: true,
+      required: true,
     },
     queuedAt: {
       type: Number,
@@ -31,6 +32,7 @@ const QueueSchema: Schema = new Schema(
     },
     reservation: {
       type: Number,
+      unique: true,
       required: true,
     },
   },
