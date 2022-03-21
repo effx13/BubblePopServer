@@ -1,4 +1,4 @@
-import { Queue } from '@src/models';
+import { Queue } from '../models';
 import express from 'express';
 
 const router = express.Router();
