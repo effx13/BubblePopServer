@@ -2,11 +2,11 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import express from 'express';
 import mongoose from 'mongoose';
-import { queues } from './routes';
+import { queues, signin, singup } from './routes';
 
 // Get Environment form .env
 dotenv.config();
-const { PORT, MONGO_URI } = process.env;
+const { PORT, MONGO_URI, SECRET } = process.env;
 const app = express();
 
 // Setting CORS, JSON
@@ -16,6 +16,8 @@ app.use(express.urlencoded({ extended: true }));
 
 // Setting Routers
 app.use('/queue', queues);
+app.use('/signin', signin);
+app.use('/signup', singup);
 
 // Connect MongoDB with Mongoose
 mongoose.Promise = global.Promise;

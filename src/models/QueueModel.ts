@@ -37,18 +37,18 @@ const QueueSchema: Schema = new Schema(
     },
   },
   {
+    collection: 'Queue',
     versionKey: false,
   },
 );
 
 interface IQueueDoc extends IQueue, Document {
-  create: (uuid: string) => Promise<void>;
+  create: () => Promise<void>;
 }
 
 interface IQueueModel extends Model<IQueueDoc> {
   findAll: () => Promise<void>;
-  findByToken: (token: string, secret_key: any) => Promise<void>;
 }
 
-const Queue = model<IQueueDoc, IQueueModel>('User', QueueSchema);
+const Queue = model<IQueueDoc, IQueueModel>('Queue', QueueSchema);
 export { Queue, IQueue };
