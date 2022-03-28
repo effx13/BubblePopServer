@@ -1,6 +1,7 @@
 import { Queue } from '../models';
 import express from 'express';
 import { v4 } from 'uuid';
+import { logger } from '../utils/logger';
 
 const router = express.Router();
 
@@ -21,6 +22,7 @@ router.get('/', (req, res) => {
         });
       })
       .catch((e) => {
+        logger.error(e);
         res.status(404).send({
           status: 'Error',
           error: e,
@@ -35,6 +37,7 @@ router.get('/', (req, res) => {
         });
       })
       .catch((e) => {
+        logger.error(e);
         res.status(404).send({
           status: 'Error',
           error: e,
@@ -49,6 +52,7 @@ router.get('/', (req, res) => {
         });
       })
       .catch((e) => {
+        logger.error(e);
         res.status(404).send({
           status: 'Error',
           error: e,
@@ -68,6 +72,7 @@ router.get('/count', (req, res) => {
       });
     })
     .catch((e) => {
+      logger.error(e);
       res.status(500).send({
         status: 'Error',
         error: e,
@@ -90,6 +95,7 @@ router.post('/', (req, res) => {
       }),
     )
     .catch((e) => {
+      logger.error(e);
       res.status(500).send({
         status: 'Error',
         error: e,

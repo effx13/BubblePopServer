@@ -1,6 +1,7 @@
 import express from 'express';
 import { User } from '../models/UsersModel';
 import { createHashedPassword } from '../utils/encrypt';
+import { logger } from '../utils/logger';
 
 const router = express.Router();
 
@@ -18,6 +19,7 @@ router.post('/', (req, res) => {
       });
     })
     .catch((e) => {
+      logger.error(e);
       res.status(500).send({
         status: 'Error',
         error: e,
