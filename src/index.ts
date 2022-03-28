@@ -9,6 +9,8 @@ import { httpLogStream, logger } from './utils/logger';
 // Get Environment form .env
 dotenv.config();
 const { PORT, MONGO_URI, SECRET } = process.env;
+
+// Configure Express
 const app = express();
 
 // Setting CORS, JSON, Morgan

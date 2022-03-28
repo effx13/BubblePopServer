@@ -5,6 +5,7 @@ import { logger } from '../utils/logger';
 
 const router = express.Router();
 
+// Create User
 router.post('/', (req, res) => {
   User.create({
     userid: req.body.userid,
