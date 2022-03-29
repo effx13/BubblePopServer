@@ -22,11 +22,11 @@ router.get('/', (req, res) => {
         });
       })
       .catch((e) => {
-        logger.error(e);
         res.status(404).send({
           status: 'Error',
           error: e,
         });
+        logger.error(e);
       });
   } else if (req.query.uuid) {
     Queue.find({ uuid: req.query.uuid })
@@ -37,11 +37,11 @@ router.get('/', (req, res) => {
         });
       })
       .catch((e) => {
-        logger.error(e);
         res.status(404).send({
           status: 'Error',
           error: e,
         });
+        logger.error(e);
       });
   } else if (req.query.name) {
     Queue.find({ name: req.query.name })
@@ -52,11 +52,11 @@ router.get('/', (req, res) => {
         });
       })
       .catch((e) => {
-        logger.error(e);
         res.status(404).send({
           status: 'Error',
           error: e,
         });
+        logger.error(e);
       });
   }
 });
@@ -72,11 +72,11 @@ router.get('/count', (req, res) => {
       });
     })
     .catch((e) => {
-      logger.error(e);
       res.status(500).send({
         status: 'Error',
         error: e,
       });
+      logger.error(e);
     });
 });
 

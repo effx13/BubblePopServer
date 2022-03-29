@@ -13,7 +13,7 @@ const { PORT, MONGO_URI, SECRET } = process.env;
 // Configure Express
 const app = express();
 
-// Setting CORS, JSON, Morgan
+// Setting CORS, JSON, Morgan middlewares
 const morganformat = ':remote-addr :method :url HTTP/:http-version :status';
 app.use(morgan(morganformat, { stream: httpLogStream }));
 app.use(cors());
@@ -22,8 +22,8 @@ app.use(express.urlencoded({ extended: true }));
 
 // Setting Routers
 app.use('/queue', queues);
-app.use('/signin', signin);
 app.use('/signup', singup);
+app.use('/login', signin);
 
 // Connect MongoDB with Mongoose
 mongoose.Promise = global.Promise;

@@ -16,15 +16,26 @@ router.post('/', (req, res) => {
     .then((user) => {
       res.send({
         status: 'Success',
-        user,
       });
     })
     .catch((e) => {
+      if (e.keyPattern.userid) {
+        res.status(409).send({
+          status: 'Error',
+          error: 'Existing ID',
+        });
+      } else if (e.keyPattern.nickname) {
+        res.status(409).send({
+          status: 'Error',
+          error: 'Existing Nickname',
+        });
+      } else {
+        res.status(500).send({
+          status: 'Error',
+          error: e,
+        });
+      }
       logger.error(e);
-      res.status(500).send({
-        status: 'Error',
-        error: e,
-      });
     });
 });
 
