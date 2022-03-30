@@ -24,7 +24,7 @@ const UserSchema: Schema = new Schema(
       type: String,
       unique: true,
     },
-    dsescription: {
+    description: {
       type: String,
     },
   },

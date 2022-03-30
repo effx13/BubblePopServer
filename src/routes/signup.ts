@@ -1,7 +1,7 @@
+import { User } from '@src/models/UsersModel';
+import { createHashedPassword } from '@src/utils/encrypt';
+import { logger } from '@src/utils/logger';
 import express from 'express';
-import { User } from '../models/UsersModel';
-import { createHashedPassword } from '../utils/encrypt';
-import { logger } from '../utils/logger';
 
 const router = express.Router();
 
@@ -32,7 +32,7 @@ router.post('/', (req, res) => {
       } else {
         res.status(500).send({
           status: 'Error',
-          error: e,
+          error: 'Unexpected Error',
         });
       }
       logger.error(e);

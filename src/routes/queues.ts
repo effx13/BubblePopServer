@@ -1,16 +1,17 @@
-import { Queue } from '../models';
+import { verifyToken } from '@src/middleware/verifytoken';
+import { Queue } from '@src/models';
+import { logger } from '@src/utils/logger';
 import express from 'express';
 import { v4 } from 'uuid';
-import { logger } from '../utils/logger';
 
 const router = express.Router();
 
-// Get Queue list by Name, UUID
+// Get Queue list by Name or UUID
 router.get('/', (req, res) => {
   if (!req.query.uuid && !req.query.name) {
     Queue.find()
       .sort({ reservation: 1 })
-      .then((queue: string | any[]) => {
+      .then((queue) => {
         if (!queue.length)
           return res.status(404).send({
             status: 'Error',
@@ -24,7 +25,7 @@ router.get('/', (req, res) => {
       .catch((e) => {
         res.status(404).send({
           status: 'Error',
-          error: e,
+          error: 'Unexpected Error',
         });
         logger.error(e);
       });
@@ -32,14 +33,14 @@ router.get('/', (req, res) => {
     Queue.find({ uuid: req.query.uuid })
       .then((queue) => {
         res.send({
-          staus: 'Success',
+          status: 'Success',
           queue,
         });
       })
       .catch((e) => {
         res.status(404).send({
           status: 'Error',
-          error: e,
+          error: 'Unexpected Error',
         });
         logger.error(e);
       });
@@ -47,14 +48,14 @@ router.get('/', (req, res) => {
     Queue.find({ name: req.query.name })
       .then((queue) => {
         res.send({
-          staus: 'Success',
+          status: 'Success',
           queue,
         });
       })
       .catch((e) => {
         res.status(404).send({
           status: 'Error',
-          error: e,
+          error: 'Unexpected Error',
         });
         logger.error(e);
       });
@@ -65,7 +66,7 @@ router.get('/', (req, res) => {
 router.get('/count', (req, res) => {
   Queue.find()
     .sort({ reservation: 1 })
-    .then((queue: string | any[]) => {
+    .then((queue) => {
       res.send({
         status: 'Success',
         count: queue.length,
@@ -74,14 +75,14 @@ router.get('/count', (req, res) => {
     .catch((e) => {
       res.status(500).send({
         status: 'Error',
-        error: e,
+        error: 'Unexpected Error',
       });
       logger.error(e);
     });
 });
 
 // Create new Document
-router.post('/', (req, res) => {
+router.post('/', verifyToken, (req, res) => {
   Queue.create({
     name: req.body.name,
     isPayed: req.body.isPayed,
@@ -95,11 +96,18 @@ router.post('/', (req, res) => {
       }),
     )
     .catch((e) => {
+      if (e.keyPattern.name) {
+        res.status(409).send({
+          status: 'Error',
+          error: 'Existing Name',
+        });
+      } else {
+        res.status(500).send({
+          status: 'Error',
+          error: 'Unexpected Error',
+        });
+      }
       logger.error(e);
-      res.status(500).send({
-        status: 'Error',
-        error: e,
-      });
     });
 });
 

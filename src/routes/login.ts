@@ -1,10 +1,17 @@
-import { createHashedPassword } from '../utils/encrypt';
+import { User } from '@src/models/UsersModel';
+import { createHashedPassword } from '@src/utils/encrypt';
+import { logger } from '@src/utils/logger';
+import dotenv from 'dotenv';
 import express from 'express';
-import { User } from '../models/UsersModel';
-import { logger } from '../utils/logger';
+import jsonwebtoken from 'jsonwebtoken';
+
+// Get Environment form .env
+dotenv.config();
+const secretKey = process.env.SECRET as string;
 
 const router = express.Router();
 
+// Return login cookie
 router.get('/', (req, res) => {
   User.find({
     userid: req.body.userid,
@@ -13,10 +20,26 @@ router.get('/', (req, res) => {
     .then((user) => {
       if (user.length === 0) {
         throw new Error('Invalid ID or PW');
+      } else {
+        const expiryDate = new Date(Date.now() + 1000 * 60 * 60); // 1 Hour
+        const token = jsonwebtoken.sign(
+          {
+            user_id: user[0].userid,
+          },
+          secretKey,
+          {
+            expiresIn: '1h',
+          },
+        );
+        res.cookie('user', token, {
+          httpOnly: true,
+          path: '/',
+          expires: expiryDate,
+        });
+        res.send({
+          status: 'Success',
+        });
       }
-      res.send({
-        status: 'Success',
-      });
     })
     .catch((e) => {
       res.status(500).send({
