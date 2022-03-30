@@ -1,6 +1,6 @@
-import { verifyToken } from '@src/middleware/verifytoken';
+import { verifyToken } from '@src/middleware';
 import { Queue } from '@src/models';
-import { logger } from '@src/utils/logger';
+import { logger } from '@src/utils';
 import express from 'express';
 import { v4 } from 'uuid';
 

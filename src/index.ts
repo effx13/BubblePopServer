@@ -5,7 +5,7 @@ import express from 'express';
 import mongoose from 'mongoose';
 import morgan from 'morgan';
 import { login, queues, signup } from '@src/routes';
-import { httpLogStream, logger } from '@src/utils/logger';
+import { httpLogStream, logger } from '@src/utils';
 
 // Get Environment form .env
 dotenv.config();

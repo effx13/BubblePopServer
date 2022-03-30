@@ -1,6 +1,6 @@
 import { User } from '@src/models/UsersModel';
-import { createHashedPassword } from '@src/utils/encrypt';
-import { logger } from '@src/utils/logger';
+import { createHashedPassword } from '@src/utils';
+import { logger } from '@src/utils';
 import express from 'express';
 
 const router = express.Router();
