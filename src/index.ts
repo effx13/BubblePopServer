@@ -6,6 +6,9 @@ import mongoose from 'mongoose';
 import morgan from 'morgan';
 import { login, queues, signup } from '@src/routes';
 import { httpLogStream, logger } from '@src/utils';
+import { findLastQueue } from '@src/scheduler';
+import { scheduleJob } from 'node-schedule';
+import { errorHandler, notFoundErrorHandler } from './middleware';
 
 // Get Environment form .env
 dotenv.config();
@@ -27,6 +30,10 @@ app.use('/queue', queues);
 app.use('/signup', signup);
 app.use('/login', login);
 
+// Setting Error Handler
+app.use(notFoundErrorHandler);
+app.use(errorHandler);
+
 // Connect MongoDB with Mongoose
 mongoose.Promise = global.Promise;
 if (MONGO_URI !== undefined) {
@@ -35,6 +42,9 @@ if (MONGO_URI !== undefined) {
     .then(() => logger.info('Successfully connected to MongoDB'))
     .catch((e) => logger.error(e));
 }
+
+// Start Scheduler
+scheduleJob('* * * * *', findLastQueue);
 
 app.listen(PORT, () => {
   logger.info(`Server listening at http://localhost:${PORT}`);

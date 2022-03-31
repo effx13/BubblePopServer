@@ -45,7 +45,7 @@ router.get('/', (req, res) => {
         if (!queue.length)
           res.status(404).send({
             status: 'Error',
-            Error: 'Queue not found',
+            Error: 'Empty queue',
           });
         res.send({
           status: 'Success',

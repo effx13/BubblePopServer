@@ -5,7 +5,7 @@ import express from 'express';
 const router = express.Router();
 
 // Create User
-router.post('/', (req, res) => {
+router.post('/', (req, res, next) => {
   User.create({
     userid: req.body.userid,
     pw: createHashedPassword(req.body.pw),
@@ -15,27 +15,17 @@ router.post('/', (req, res) => {
     .then((user) => {
       res.send({
         status: 'Success',
-        message: `Successfully Signup ${user.userid}`,
+        message: `Successfully signup, ${user.userid}`,
       });
     })
     .catch((e) => {
       if (e.keyPattern.userid) {
-        res.status(409).send({
-          status: 'Error',
-          error: 'Existing ID',
-        });
+        next({ name: 'ExistID' });
       } else if (e.keyPattern.nickname) {
-        res.status(409).send({
-          status: 'Error',
-          error: 'Existing Nickname',
-        });
+        next({ name: 'ExistNickname' });
       } else {
-        res.status(500).send({
-          status: 'Error',
-          error: 'Unexpected Error',
-        });
+        next({ name: 'Error' });
       }
-      logger.error(e);
     });
 });
 
