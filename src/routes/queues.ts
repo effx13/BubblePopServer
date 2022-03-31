@@ -6,6 +6,36 @@ import { v4 } from 'uuid';
 
 const router = express.Router();
 
+// Create new Document
+router.post('/', verifyToken, (req, res) => {
+  Queue.create({
+    name: req.body.name,
+    isPayed: req.body.isPayed,
+    uuid: v4(),
+    reservation: req.body.reservation,
+  })
+    .then((queue) =>
+      res.send({
+        status: 'Success',
+        queue,
+      }),
+    )
+    .catch((e) => {
+      if (e.keyPattern.name) {
+        res.status(409).send({
+          status: 'Error',
+          error: 'Existing Name',
+        });
+      } else {
+        res.status(500).send({
+          status: 'Error',
+          error: 'Unexpected Error',
+        });
+      }
+      logger.error(e);
+    });
+});
+
 // Get Queue list by Name or UUID
 router.get('/', (req, res) => {
   if (!req.query.uuid && !req.query.name) {
@@ -13,7 +43,7 @@ router.get('/', (req, res) => {
       .sort({ reservation: 1 })
       .then((queue) => {
         if (!queue.length)
-          return res.status(404).send({
+          res.status(404).send({
             status: 'Error',
             Error: 'Queue not found',
           });
@@ -77,36 +107,6 @@ router.get('/count', (req, res) => {
         status: 'Error',
         error: 'Unexpected Error',
       });
-      logger.error(e);
-    });
-});
-
-// Create new Document
-router.post('/', verifyToken, (req, res) => {
-  Queue.create({
-    name: req.body.name,
-    isPayed: req.body.isPayed,
-    uuid: v4(),
-    reservation: req.body.reservation,
-  })
-    .then((queue) =>
-      res.send({
-        status: 'Success',
-        queue,
-      }),
-    )
-    .catch((e) => {
-      if (e.keyPattern.name) {
-        res.status(409).send({
-          status: 'Error',
-          error: 'Existing Name',
-        });
-      } else {
-        res.status(500).send({
-          status: 'Error',
-          error: 'Unexpected Error',
-        });
-      }
       logger.error(e);
     });
 });

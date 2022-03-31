@@ -1,6 +1,5 @@
 import { User } from '@src/models/UsersModel';
-import { createHashedPassword } from '@src/utils';
-import { logger } from '@src/utils';
+import { createHashedPassword, logger } from '@src/utils';
 import express from 'express';
 
 const router = express.Router();
@@ -16,6 +15,7 @@ router.post('/', (req, res) => {
     .then((user) => {
       res.send({
         status: 'Success',
+        message: `Successfully Signup ${user.userid}`,
       });
     })
     .catch((e) => {
