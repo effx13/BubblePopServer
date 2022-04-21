@@ -21,7 +21,12 @@ const app = express();
 const morganFormat = ':remote-addr :method :url HTTP/:http-version :status';
 app.use(morgan(morganFormat, { stream: httpLogStream }));
 app.use(cookieParser(SECRET));
-app.use(cors());
+app.use(
+  cors({
+    origin: '*',
+    credentials: true,
+  }),
+);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
