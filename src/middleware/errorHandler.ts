@@ -28,7 +28,6 @@ const errorHandler = (
   res: express.Response,
   next: express.NextFunction,
 ) => {
-  console.log(err.name);
   switch (err.name) {
     case 'ExistID':
       res.status(409).send({
@@ -45,6 +44,7 @@ const errorHandler = (
     default:
       break;
   }
+  next();
 };
 
 export { notFoundErrorHandler, errorHandler };

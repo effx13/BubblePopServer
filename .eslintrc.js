@@ -13,7 +13,7 @@ module.exports = {
   extends: ['airbnb-base', 'airbnb-typescript/base', 'prettier'],
   plugins: ['@typescript-eslint'],
   rules: {
-    indent: ['error', 2],
+    indent: ['error', 2, { SwitchCase: 1 }],
     semi: ['error', 'always'],
     'no-trailing-spaces': 0,
     'keyword-spacing': 0,

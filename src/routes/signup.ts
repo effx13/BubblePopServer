@@ -1,5 +1,5 @@
 import { User } from '@src/models/UsersModel';
-import { createHashedPassword, logger } from '@src/utils';
+import { createHashedPassword } from '@src/utils';
 import express from 'express';
 
 const router = express.Router();

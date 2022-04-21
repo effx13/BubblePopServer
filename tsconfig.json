@@ -1,5 +1,5 @@
 {
-  "include": ["src", "webpack.config.js", "tsconfig.eslint.js"],
+  "include": ["src", "webpack.config.js", "tsconfig.eslint.json"],
   "exclude": ["node_modules", "**/node_modules/*"],
   "compilerOptions": {
     /* Visit https://aka.ms/tsconfig.json to read more about this file */
