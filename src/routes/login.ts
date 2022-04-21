@@ -11,7 +11,7 @@ const secretKey = process.env.SECRET as string;
 const router = express.Router();
 
 // Return login cookie
-router.get('/', (req, res) => {
+router.post('/', (req, res) => {
   User.find({
     userid: req.body.userid,
     pw: createHashedPassword(req.body.pw),
