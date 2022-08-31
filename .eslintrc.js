@@ -1,37 +1,22 @@
 module.exports = {
-  ignorePatterns: [],
-  env: {
-    es2021: true,
-    node: true,
-  },
   parser: '@typescript-eslint/parser',
   parserOptions: {
-    ecmaVersion: 13,
+    project: 'tsconfig.json',
+    tsconfigRootDir: __dirname,
     sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.eslint.json'], // Specify it only for TypeScript files
   },
-  extends: ['airbnb-base', 'airbnb-typescript/base', 'prettier'],
-  plugins: ['@typescript-eslint'],
+  plugins: ['@typescript-eslint/eslint-plugin'],
+  extends: ['plugin:@typescript-eslint/recommended'],
+  root: true,
+  env: {
+    node: true,
+    jest: true,
+  },
+  ignorePatterns: ['.eslintrc.js', 'node_modules', 'dist'],
   rules: {
-    indent: ['error', 2, { SwitchCase: 1 }],
-    semi: ['error', 'always'],
-    'no-trailing-spaces': 0,
-    'keyword-spacing': 0,
-    'no-unused-vars': 0,
-    'no-multiple-empty-lines': 0,
-    'space-before-function-paren': 0,
-    'eol-last': 0,
+    '@typescript-eslint/interface-name-prefix': 'off',
+    '@typescript-eslint/explicit-function-return-type': 'off',
+    '@typescript-eslint/explicit-module-boundary-types': 'off',
+    '@typescript-eslint/no-explicit-any': 'off',
   },
-  overrides: [
-    {
-      files: ['**/*.ts?(x)'], // Your TypeScript files extension
-      parserOptions: {
-        tsconfigRootDir: __dirname,
-      },
-      rules: {
-        'import/prefer-default-export': 'off',
-        'new-cap': 'off',
-      },
-    },
-  ],
 };
