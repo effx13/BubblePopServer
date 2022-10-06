@@ -6,7 +6,7 @@ import { PrismaService } from './../prisma/prisma.service';
 export class UsersService {
   constructor(private readonly prismaService: PrismaService) {}
 
-  async findOne(userId: string): Promise<any> {
+  async isExist(userId: string) {
     return this.prismaService.user.findUnique({
       where: {
         userId: userId,
@@ -14,7 +14,15 @@ export class UsersService {
     });
   }
 
-  async create(data: PostSignupDTO): Promise<any> {
+  async findOne(userId: string) {
+    return this.prismaService.user.findUnique({
+      where: {
+        userId: userId,
+      },
+    });
+  }
+
+  async create(data: PostSignupDTO) {
     return this.prismaService.user.create({
       data,
     });

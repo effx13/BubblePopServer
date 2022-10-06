@@ -17,14 +17,15 @@ export class PostSignupDTO {
   name: string;
 
   @IsNotEmpty()
+  @IsString()
+  nickname: string;
+
+  @IsNotEmpty()
   @IsEmail()
   email: string;
 
   @IsNotEmpty()
   @MinLength(4)
   @MaxLength(20)
-  @Matches(/((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/, {
-    message: 'password too weak',
-  })
   password: string;
 }
