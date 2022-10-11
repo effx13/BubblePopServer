@@ -15,7 +15,7 @@ export class QueueController {
     return this.queueService.getQueueCount();
   }
 
-  @Post('/')
+  @Post('/create')
   async createQueue(@Body() query) {
     return this.queueService.createQueue(query);
   }
