@@ -6,10 +6,12 @@ import { UsersModule } from './users/users.module';
 import { QueueService } from './queue/queue.service';
 import { QueueController } from './queue/queue.controller';
 import { PrismaService } from './prisma/prisma.service';
+import { ScheduleModule } from '@nestjs/schedule';
+import { TaskService } from './task/task.service';
 
 @Module({
-  imports: [AuthModule, UsersModule],
+  imports: [AuthModule, UsersModule, ScheduleModule.forRoot()],
   controllers: [AppController, QueueController],
-  providers: [AppService, QueueService, PrismaService],
+  providers: [AppService, QueueService, PrismaService, TaskService],
 })
 export class AppModule {}
